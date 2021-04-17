@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -18,26 +19,18 @@ public class CameraFollow : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        target = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (target != null)
         {
             cameraPos = new Vector3(Mathf.SmoothStep(transform.position.x, target.transform.position.x, dampTime), Mathf.SmoothStep(transform.position.y, target.transform.position.y, dampTime));
         }
-
-
-
     }
     void LateUpdate()
     {
-
         transform.position = cameraPos + Vector3.forward * -10;
-
-
     }
 }
