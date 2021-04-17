@@ -10,6 +10,7 @@ public class Player : NetworkBehaviour
 	public float moveSpeed = 5f;
 	NetworkVariableString nameNetworkVariable = new NetworkVariableString (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.OwnerOnly });
 	public NetworkVariableInt killsNetworkVariable = new NetworkVariableInt (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.ServerOnly });
+	public NetworkVariableBool deadNetworkVariable = new NetworkVariableBool (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.ServerOnly });
 
 	public Rigidbody2D rb;
 
@@ -20,6 +21,7 @@ public class Player : NetworkBehaviour
 	Rect rect = new Rect(0, 0, 300, 100);
 	Vector3 offset = new Vector3(-0.2f, -1.0f, 0.5f);
 
+	float deadTimer = 0.0f;
 	Camera cam;
 	Vector2 movement;
 	Vector2 mousePos;
@@ -36,12 +38,24 @@ public class Player : NetworkBehaviour
 		{
 			killsNetworkVariable.Value = 0;
 		}
+
+		deadNetworkVariable.OnValueChanged += DeadChanged;
+	}
+
+	void DeadChanged (bool old, bool now)
+	{
+		if (now)
+		{
+			deadTimer = 5.0f;
+			GetComponent<Renderer>().material.color = Color.red;
+			rb.isKinematic = true;
+		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (IsLocalPlayer)
+		if (IsLocalPlayer && !deadNetworkVariable.Value)
 		{
 			movement.x = Input.GetAxisRaw("Horizontal");
 			movement.y = Input.GetAxisRaw("Vertical");
@@ -51,6 +65,19 @@ public class Player : NetworkBehaviour
 			{ 
 				ShootServerRpc();
 			}
+		}
+
+		if (deadNetworkVariable.Value)
+		{ 
+			if (deadTimer <= 0.0f)
+			{
+				deadNetworkVariable.Value = false;
+				GetComponent<Renderer>().material.color = Color.white;
+				rb.isKinematic = false;
+			}
+
+			deadTimer -= Time.deltaTime;
+			Debug.Log (deadTimer);
 		}
 	}
 

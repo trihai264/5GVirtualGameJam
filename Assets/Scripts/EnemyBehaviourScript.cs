@@ -9,7 +9,7 @@ public class EnemyBehaviourScript : NetworkBehaviour
 	public bool _gameOver = false;
 
 	public GameObject _explosionPrefab;
-	private Transform _target;
+	private Vector2 _target;
 	private Rigidbody2D _rb;
 	private SpriteRenderer _sr;
 	private BoxCollider2D _bc2d;
@@ -36,31 +36,37 @@ public class EnemyBehaviourScript : NetworkBehaviour
 			{ 
 				GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 
-				int closest = 0;
-				float dist = float.MaxValue;
+				int closest = -1;
+				float dist = 50.0f;
 				for (int i = 0; i < players.Length; ++ i) 
 				{
 					float d = Vector2.Distance (transform.position, players[i].transform.position);
-
-					if (d <= dist)
+					if (d <= dist && !players[i].GetComponent<Player>().deadNetworkVariable.Value)
 					{ 
 						closest = i;
 						dist = d;
 					}
 				}
 
-				if (players.Length > 0)
+				if (players.Length > 0 && closest >= 0)
 				{
-					_target = players[closest].transform;
+					_target = players[closest].transform.position;
 					hasTarget = true;
-					newTargetTimer = 1.0f;
+					newTargetTimer = Random.Range (1.0f, 4.0f);
+				}
+
+				else
+				{
+					_target = new Vector2 (Random.Range (-10.0f, 10.0f) + transform.position.x, Random.Range (-10.0f, 10.0f) + transform.position.y);
+					hasTarget = true;
+					newTargetTimer = Random.Range (1.5f, 4.0f);
 				}
 			}
 
 
 			if (hasTarget)
 			{ 
-				transform.position = Vector2.MoveTowards(transform.position, _target.position, _moveSpeed * Time.deltaTime);
+				transform.position = Vector2.MoveTowards(transform.position, _target, _moveSpeed * Time.deltaTime);
 			}
 
 			newTargetTimer -= Time.deltaTime;
@@ -91,6 +97,7 @@ public class EnemyBehaviourScript : NetworkBehaviour
 				if (collision.gameObject.GetComponent<Player>().killsNetworkVariable != null)
 				{
 					collision.gameObject.GetComponent<Player>().killsNetworkVariable.Value = 0;
+					collision.gameObject.GetComponent<Player>().deadNetworkVariable.Value = true;
 				}
 			}
 		}

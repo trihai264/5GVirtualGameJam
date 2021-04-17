@@ -28,6 +28,7 @@ public class Bullet : NetworkBehaviour
 				if (collision.gameObject.GetComponent<Player>().killsNetworkVariable != null)
 				{
 					collision.gameObject.GetComponent<Player>().killsNetworkVariable.Value = 0;
+                    collision.gameObject.GetComponent<Player>().deadNetworkVariable.Value = true;
 				}
 
                 if (killCount != null)
