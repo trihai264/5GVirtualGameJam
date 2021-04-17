@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     public GameObject HitEffect;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject effect = Instantiate(HitEffect, transform.position, Quaternion.identity);
-        Destroy(effect, 1f);
-        Destroy(gameObject);
+        if (IsServer || IsHost)
+        {
+            GameObject effect = Instantiate(HitEffect, transform.position, Quaternion.identity);
+            effect.GetComponent<NetworkObject>().Spawn();
+            Destroy(effect, 1f);
+            Destroy(gameObject);
+        }
     }
-
 }
