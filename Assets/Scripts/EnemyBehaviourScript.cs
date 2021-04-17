@@ -79,6 +79,20 @@ public class EnemyBehaviourScript : NetworkBehaviour
 				Destroy(Instantiate(_explosionPrefab, transform.position, Quaternion.identity), 0.25f);
 				Destroy(gameObject, 0.25f);
 			}
+
+			if (collision.gameObject.tag == "Player")
+			{
+				_moveSpeed = 0.0f;
+				_bc2d.enabled = false;
+				_sr.enabled = false;
+				Destroy(Instantiate(_explosionPrefab, transform.position, Quaternion.identity), 0.25f);
+				Destroy(gameObject, 0.25f);
+
+				if (collision.gameObject.GetComponent<Player>().killsNetworkVariable != null)
+				{
+					collision.gameObject.GetComponent<Player>().killsNetworkVariable.Value = 0;
+				}
+			}
 		}
 	}
 }

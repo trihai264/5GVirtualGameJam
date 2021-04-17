@@ -9,7 +9,7 @@ public class Player : NetworkBehaviour
 {
 	public float moveSpeed = 5f;
 	NetworkVariableString nameNetworkVariable = new NetworkVariableString (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.OwnerOnly });
-	NetworkVariableInt killsNetworkVariable = new NetworkVariableInt (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.ServerOnly });
+	public NetworkVariableInt killsNetworkVariable = new NetworkVariableInt (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.ServerOnly });
 
 	public Rigidbody2D rb;
 
@@ -30,6 +30,11 @@ public class Player : NetworkBehaviour
 		{
 			GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraFollow>().target = gameObject;
 			nameNetworkVariable.Value = PlayerPrefs.GetString ("name");
+		}
+
+		if (IsServer)
+		{
+			killsNetworkVariable.Value = 0;
 		}
 	}
 
@@ -67,13 +72,14 @@ public class Player : NetworkBehaviour
         rect.x = point.x;
         rect.y = Screen.height - point.y - rect.height;
 		GUI.color = Color.red;
-        GUI.Label(rect, nameNetworkVariable.Value);
+        GUI.Label(rect, nameNetworkVariable.Value + ": " + killsNetworkVariable.Value);
     }
 
 	[ServerRpc]
     void ShootServerRpc()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+		bullet.GetComponent<Bullet>().killCount = killsNetworkVariable;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
         bullet.GetComponent<NetworkObject>().Spawn();
