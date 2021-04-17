@@ -13,7 +13,7 @@ public class Bullet : NetworkBehaviour
         {
             GameObject effect = Instantiate(HitEffect, transform.position, Quaternion.identity);
             effect.GetComponent<NetworkObject>().Spawn();
-            Destroy(effect, 1f);
+            Destroy(effect, 0.25f);
             Destroy(gameObject);
         }
     }

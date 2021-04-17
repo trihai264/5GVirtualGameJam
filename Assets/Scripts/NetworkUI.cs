@@ -22,6 +22,7 @@ public class NetworkUI : MonoBehaviour
         buttonJoin = GameObject.Find ("Join").GetComponent<Button>();
         inputFieldIp = GameObject.Find ("InputFieldIP").GetComponent<InputField>();
         inputFieldName = GameObject.Find ("InputFieldName").GetComponent<InputField>();
+        inputFieldName.text = PlayerPrefs.GetString ("name");
         errorText = GameObject.Find ("Error").GetComponent<Text>();
         errorText.text = "";
         buttonHost.onClick.AddListener (Host);
@@ -72,6 +73,8 @@ public class NetworkUI : MonoBehaviour
 
         else
         { 
+            PlayerPrefs.SetString ("name", inputFieldName.text);
+            PlayerPrefs.Save ();
             errorText.text = "";
             NetworkManager.Singleton.StartHost ();
             gameObject.SetActive(false);
@@ -98,6 +101,8 @@ public class NetworkUI : MonoBehaviour
 
         else
         {
+            PlayerPrefs.SetString ("name", inputFieldName.text);
+            PlayerPrefs.Save ();
             errorText.text = "Connecting...";
             if (inputFieldIp.text.Length > 0)
             {
