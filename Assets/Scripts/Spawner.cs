@@ -20,8 +20,8 @@ public class Spawner : NetworkBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0.0f)
             {
-                timer = 1.5f;
-                GameObject g = Instantiate(objects [Random.Range (0, objects.Length - 1)]);
+                timer = Random.Range (1.5f, 5.0f);
+                GameObject g = Instantiate(objects [Random.Range (0, objects.Length - 1)], transform);
                 g.GetComponent<NetworkObject>().Spawn ();
 			}
 		}

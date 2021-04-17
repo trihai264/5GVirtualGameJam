@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2233342756065974800}
   - component: {fileID: 2233342756065974895}
   - component: {fileID: 2233342756065974894}
-  - component: {fileID: 2233342756065974802}
   - component: {fileID: 8893549609976099865}
   - component: {fileID: -4341203612428427347}
   - component: {fileID: 7639686834735524116}
@@ -126,19 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rb: {fileID: 2233342756065974895}
-  cam: {fileID: 0}
---- !u!114 &2233342756065974802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2233342756065974893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20898ae7aff86c74f96c544aadf94e31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   firePoint: {fileID: 2233342756412805878}
   bulletPrefab: {fileID: 3313072582354437348, guid: 4570c2beafdf90a4aae777361c708f48, type: 3}
   bulletForce: 20
@@ -271,7 +257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2233342756412805877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.012, y: 0.476, z: 0}
+  m_LocalPosition: {x: -0.001, y: 0.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2233342756065974801}
