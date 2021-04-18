@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -31, y: 350}
-  m_SizeDelta: {x: 200, y: 242.6}
+  m_AnchoredPosition: {x: -31, y: 280}
+  m_SizeDelta: {x: 733.9951, y: 373.0228}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &447748988
 MonoBehaviour:
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game's Name
+  m_text: Fight For Tampere
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 591d553f5ed52ac4d96469f26850f386, type: 2}
   m_sharedMaterial: {fileID: 5883580769250471133, guid: 591d553f5ed52ac4d96469f26850f386, type: 2}
@@ -207,8 +207,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 120
+  m_fontSizeBase: 120
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -475,7 +475,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 404a66cddb6ca1648ba29fbf9b23f1f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a49e9119595048499589b0d065387a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -503,7 +503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &958168835
 RectTransform:
   m_ObjectHideFlags: 0
@@ -656,8 +656,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -720.0001, y: -93.3}
-  m_SizeDelta: {x: 585.7, y: 186.6}
+  m_AnchoredPosition: {x: -720, y: -146}
+  m_SizeDelta: {x: 497.111, y: 144.7663}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093430945
 MonoBehaviour:
