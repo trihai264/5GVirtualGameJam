@@ -110,5 +110,6 @@ public class Player : NetworkBehaviour
         rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
         bullet.GetComponent<NetworkObject>().Spawn();
         Destroy(bullet, 5f);
+		GetComponent<AudioSource>().Play();
     }
 }
