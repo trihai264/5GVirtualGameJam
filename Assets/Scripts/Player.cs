@@ -48,7 +48,7 @@ public class Player : NetworkBehaviour
 		{
 			deadTimer = 5.0f;
 			GetComponent<Renderer>().material.color = Color.red;
-			rb.isKinematic = true;
+			GetComponent<BoxCollider2D>().enabled = false;
 		}
 	}
 
@@ -73,7 +73,7 @@ public class Player : NetworkBehaviour
 			{
 				deadNetworkVariable.Value = false;
 				GetComponent<Renderer>().material.color = Color.white;
-				rb.isKinematic = false;
+				GetComponent<BoxCollider2D>().enabled = true;
 			}
 
 			deadTimer -= Time.deltaTime;
@@ -82,7 +82,7 @@ public class Player : NetworkBehaviour
 
 	void FixedUpdate()
 	{
-		if (IsLocalPlayer)
+		if (IsLocalPlayer && !deadNetworkVariable.Value)
 		{
 			rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
@@ -101,6 +101,7 @@ public class Player : NetworkBehaviour
         GUI.Label(rect, nameNetworkVariable.Value + ": " + killsNetworkVariable.Value);
     }
 
+	
 	[ServerRpc]
     void ShootServerRpc()
     {
@@ -111,5 +112,13 @@ public class Player : NetworkBehaviour
         bullet.GetComponent<NetworkObject>().Spawn();
         Destroy(bullet, 5f);
 		GetComponent<AudioSource>().Play();
+		ShootSoundClientRpc ();
     }
+
+
+	[ClientRpc]
+	void ShootSoundClientRpc()
+	{
+		GetComponent<AudioSource>().Play();
+	}
 }
