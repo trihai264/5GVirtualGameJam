@@ -30,7 +30,7 @@ public class Player : NetworkBehaviour
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera>();
 		if (IsLocalPlayer)
 		{
-			GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraFollow>().target = gameObject;
+			GameObject.FindGameObjectWithTag ("CameraParent").GetComponent<CameraFollow>().target = gameObject;
 			nameNetworkVariable.Value = PlayerPrefs.GetString ("name");
 		}
 

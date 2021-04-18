@@ -8,6 +8,14 @@ public class Bullet : NetworkBehaviour
 {
     public GameObject HitEffect;
     public NetworkVariableInt killCount;
+    Camera cam;
+    private ScreenShake shake;
+
+    void Start()
+    {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        shake = cam.GetComponent<ScreenShake>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -20,6 +28,7 @@ public class Bullet : NetworkBehaviour
 
             if (collision.gameObject.tag == "Crab" && killCount != null)
             {
+                shake.shake = 0.3f;
                 ++ killCount.Value;
 			}
 
@@ -33,6 +42,7 @@ public class Bullet : NetworkBehaviour
 
                 if (killCount != null)
                 {
+                    shake.shake = 0.3f;
                     ++ killCount.Value;
 				}
 			}
