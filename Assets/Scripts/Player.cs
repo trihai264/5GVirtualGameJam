@@ -8,7 +8,7 @@ using MLAPI.Messaging;
 public class Player : NetworkBehaviour
 {
 	public float moveSpeed = 5f;
-	NetworkVariableString nameNetworkVariable = new NetworkVariableString (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.OwnerOnly });
+	public NetworkVariableString nameNetworkVariable = new NetworkVariableString (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.OwnerOnly });
 	public NetworkVariableInt killsNetworkVariable = new NetworkVariableInt (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.ServerOnly });
 	public NetworkVariableBool deadNetworkVariable = new NetworkVariableBool (new NetworkVariableSettings { ReadPermission = NetworkVariablePermission.Everyone, WritePermission = NetworkVariablePermission.ServerOnly });
 
@@ -77,7 +77,6 @@ public class Player : NetworkBehaviour
 			}
 
 			deadTimer -= Time.deltaTime;
-			Debug.Log (deadTimer);
 		}
 	}
 

@@ -10,6 +10,8 @@ public class NetworkUI : MonoBehaviour
 {
     static string ErrorNameTooShort = "Name needs to be more than 3 characters long";
     // Start is called before the first frame update
+
+    GameObject networkMenuPanel;
     Button buttonHost;
     Button buttonJoin;
     InputField inputFieldIp;
@@ -18,6 +20,7 @@ public class NetworkUI : MonoBehaviour
     float t = 0.0f;
     void Start()
     {
+        networkMenuPanel = GameObject.Find ("NetworkMenu");
         buttonHost = GameObject.Find ("Host").GetComponent<Button>();
         buttonJoin = GameObject.Find ("Join").GetComponent<Button>();
         inputFieldIp = GameObject.Find ("InputFieldIP").GetComponent<InputField>();
@@ -42,7 +45,25 @@ public class NetworkUI : MonoBehaviour
 
 	private void Update()
 	{
-		if (gameObject.activeInHierarchy == true && (NetworkManager.Singleton.IsClient))
+        if (networkMenuPanel.activeInHierarchy == false)
+        {
+            if (Input.GetButtonDown ("Cancel"))
+            {
+                networkMenuPanel.SetActive (true);
+                if (NetworkManager.Singleton.IsClient)
+                {
+                    NetworkManager.Singleton.StopClient ();
+		        }
+
+                else if (NetworkManager.Singleton.IsHost)
+                {
+            
+                    NetworkManager.Singleton.StopHost ();
+		        }
+            }
+		}
+
+		if (networkMenuPanel.activeInHierarchy == true && (NetworkManager.Singleton.IsClient))
         {
             if (Time.time - t >= 5.0f)
             {
@@ -77,7 +98,7 @@ public class NetworkUI : MonoBehaviour
             PlayerPrefs.Save ();
             errorText.text = "";
             NetworkManager.Singleton.StartHost ();
-            gameObject.SetActive(false);
+            networkMenuPanel.SetActive(false);
         }
     }
 
@@ -122,14 +143,14 @@ public class NetworkUI : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsServer)
         {
-            gameObject.SetActive(false);
+            networkMenuPanel.SetActive(false);
 		}
 	}
     void ClientConnected (ulong v)
     {
         if (!NetworkManager.Singleton.IsServer)
         {
-            gameObject.SetActive(false);
+            networkMenuPanel.SetActive(false);
 		}
 	}
 
@@ -137,7 +158,7 @@ public class NetworkUI : MonoBehaviour
     {
         if (!NetworkManager.Singleton.IsServer)
         {
-            gameObject.SetActive(true);
+            networkMenuPanel.SetActive(true);
             errorText.text = "Disconnected from the Host";
 		}
 	}
